@@ -8,9 +8,9 @@ function App() {
   return (
     <AppMainContainer>
       <SectionContainer>
-        <h3> {birthdays.length} birthdays today</h3>
+        <h3> {birthdays.length} team members</h3>
         <List birthdays={birthdays} />
-        <button onClick={() => setBirthdays([])}>Clear all</button>
+        <button onClick={() => setBirthdays([])}>Fire all</button>
       </SectionContainer>
     </AppMainContainer>
   );
