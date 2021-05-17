@@ -4,12 +4,13 @@ import List from './List';
 import styled from 'styled-components';
 
 function App() {
+  const [birthdays, setBirthdays] = useState(data);
   return (
     <AppMainContainer>
       <SectionContainer>
-        <h3> {data.length} birthdays today</h3>
-        <List />
-        <button onClick={() => console.log('I was clicked')}>Clear all</button>
+        <h3> {birthdays.length} birthdays today</h3>
+        <List birthdays={birthdays} />
+        <button onClick={() => setBirthdays([])}>Clear all</button>
       </SectionContainer>
     </AppMainContainer>
   );
