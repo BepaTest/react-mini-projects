@@ -1,38 +1,80 @@
-import React, { useState } from 'react';
-import data from './data';
-import List from './List';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import data from './Team/data';
+import List from './Team/List';
+import Tours from './Tours/Tours';
+import Loading from './Tours/Loading';
+
+const url = 'https://course-api.com/react-tours-project';
 
 function App() {
-  const [birthdays, setBirthdays] = useState(data);
+  const [people, setPeople] = useState(data);
+  const [loading, setLoading] = useState(true);
+  const [tours, setTours] = useState([]);
+
+  const fetchTours = async () => {
+    try {
+      const response = await fetch(url);
+      const tours = await response.json();
+      setLoading(false);
+      setTours(tours);
+      console.log(tours);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchTours();
+  }, []);
+
+  if (loading) {
+    return (
+      <ToursContainer>
+        <Loading />
+      </ToursContainer>
+    );
+  }
   return (
-    <AppMainContainer>
-      <SectionContainer>
-        <h3> {birthdays.length} team members</h3>
-        <List birthdays={birthdays} />
-        <button onClick={() => setBirthdays([])}>Fire all</button>
-      </SectionContainer>
-    </AppMainContainer>
+    <>
+      <ToursContainer>
+        <Tours tours={tours} />
+      </ToursContainer>
+      <TeamContainer>
+        <SectionContainer>
+          <h3> {people.length} team members</h3>
+          <List people={people} />
+          <button onClick={() => setPeople([])}>Fire all</button>
+        </SectionContainer>
+      </TeamContainer>
+    </>
   );
 }
 
 export default App;
 
-const AppMainContainer = styled.div`
+const ToursContainer = styled.div`
+  width: 90vw;
+  max-width: 620px;
+  margin: 5rem auto;
+`;
+
+const TeamContainer = styled.div`
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #f28ab2;
 `;
 
 const SectionContainer = styled.div`
   width: 90vw;
   margin: 5rem 0;
-  max-width: var(--fixed-width);
-  background: var(--clr-white);
-  border-radius: var(--radius);
+  max-width: 450px;
+  background: white;
+  border-radius: 0.25rem;
   padding: 1.5rem 2rem;
-  box-shadow: var(--dark-shadow);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 
   > h3 {
     font-weight: normal;
@@ -41,17 +83,17 @@ const SectionContainer = styled.div`
   }
 
   > button {
-    color: var(--clr-white);
+    color: white;
     display: block;
     width: 100%;
     border-color: transparent;
-    background: var(--clr-pink);
+    background: #f28ab2;
     margin: 2rem auto 0 auto;
     text-transform: capitalize;
     font-size: 1.2rem;
     padding: 0.5rem 0;
-    letter-spacing: var(--spacing);
-    border-radius: var(--radius);
+    letter-spacing: 0.1rem;
+    border-radius: 0.25rem;
     outline: 1px solid rgba(242, 138, 178, 0.8);
     cursor: pointer;
     text-transform: uppercase;

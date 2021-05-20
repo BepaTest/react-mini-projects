@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function List({ birthdays }) {
-  return birthdays.map((birthday) => {
-    const { id, name, age, image } = birthday;
+function List({ people }) {
+  return people.map((person) => {
+    const { id, name, age, image } = person;
     return (
       <PersonContainer key={id}>
         <img src={image} alt={name} />
@@ -30,7 +30,7 @@ const PersonContainer = styled.div`
     height: 75px;
     object-fit: cover;
     border-radius: 50%;
-    box-shadow: var(--light-shadow);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
   > div > h4 {
     margin-bottom: 0.35rem;
